@@ -4,10 +4,12 @@ import comportements.Avancer;
 import comportements.EmergencyStop;
 import comportements.TournerDroite;
 import comportements.TournerGauche;
+import comportements.VerifCouleurs;
 import lejos.hardware.Button;
 import lejos.hardware.motor.Motor;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
+import lejos.hardware.sensor.EV3GyroSensor;
 import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.robotics.chassis.Chassis;
 import lejos.robotics.chassis.Wheel;
@@ -33,14 +35,18 @@ public class Main {
 		
 		EV3TouchSensor ts = new EV3TouchSensor(SensorPort.S1);
 		EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);
+		EV3GyroSensor gs = new EV3GyroSensor(SensorPort.S2);
+		
+		//012 => colors ; 3 => gyro
 		float[] s = new float[3];
 		
 		EmergencyStop emergencyStop = new EmergencyStop(ts, cs);
 		Behavior avancer = new Avancer(pilot);
 		Behavior tournerGauche = new TournerGauche(pilot);
 		Behavior tournerDroite = new TournerDroite(pilot);
+		Behavior verifCouleurs = new VerifCouleurs(cs, s);
 		
-		Behavior[] behaviors = {avancer, tournerGauche, tournerDroite, emergencyStop};
+		Behavior[] behaviors = {verifCouleurs, emergencyStop};
 		
 		
 		Arbitrator arbitrator = new Arbitrator(behaviors);

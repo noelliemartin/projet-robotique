@@ -1,7 +1,7 @@
 package logique;
 
 public class Case {
-	private static int dimension = 12;
+	
 	private int couleur;
 	private int cout;
 	

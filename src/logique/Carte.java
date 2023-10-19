@@ -2,6 +2,7 @@ package logique;
 
 import java.util.Arrays;
 
+// TODO : ne doit pas être dépendant de IParams
 public class Carte implements IParams{
 	
 	private Case[][] map;

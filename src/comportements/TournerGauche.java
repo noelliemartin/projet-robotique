@@ -16,7 +16,8 @@ public class TournerGauche implements Behavior{
 	public boolean takeControl() {
 		boolean v = Button.LEFT.isDown();
 		if(v) System.out.println("gauche");
-		return v;
+		System.out.println(v);
+		return true;
 	}
 
 	@Override
