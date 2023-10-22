@@ -1,7 +1,10 @@
 package main;
 
 import comportements.Avancer;
+import comportements.DemiTour;
 import comportements.EmergencyStop;
+import comportements.GereChemin;
+import comportements.StopProg;
 import comportements.TournerDroite;
 import comportements.TournerGauche;
 import comportements.VerifCouleurs;
@@ -17,11 +20,17 @@ import lejos.robotics.chassis.WheeledChassis;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
+import logique.Main_logique;
 
 public class Main {
 	
 	public static void main(String[] args) {
-		System.out.println("attente...");
+		//Récupérer le chemin avec les coordonnées et les couleurs
+		Main_logique vals_theo = new Main_logique ();
+		int [][] chemin= vals_theo.getChemin1();
+		float[][] cheminCouleurs= vals_theo.getCheminColors();
+		
+		System.out.println("Pressez un bouton.");
 		//Attente de l'intialisation
 		Button.waitForAnyPress();
 		
@@ -33,24 +42,31 @@ public class Main {
 		pilot.setLinearSpeed(30.);
 		pilot.setAngularSpeed(30.);
 		
-		EV3TouchSensor ts = new EV3TouchSensor(SensorPort.S1);
-		EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);
-		EV3GyroSensor gs = new EV3GyroSensor(SensorPort.S2);
+		//EV3TouchSensor ts = new EV3TouchSensor(SensorPort.S1);
+		//EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);
+		//EV3GyroSensor gs = new EV3GyroSensor(SensorPort.S2);
 		
+		EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S2);
 		//012 => colors ; 3 => gyro
 		float[] s = new float[3];
 		
-		EmergencyStop emergencyStop = new EmergencyStop(ts, cs);
+		//Création des behaviors
+		EmergencyStop emergencyStop = new EmergencyStop(cs,pilot);
 		Behavior avancer = new Avancer(pilot);
 		Behavior tournerGauche = new TournerGauche(pilot);
 		Behavior tournerDroite = new TournerDroite(pilot);
 		Behavior verifCouleurs = new VerifCouleurs(cs, s);
+		Behavior demiTour= new DemiTour(pilot);
+		StopProg stopProg= new StopProg(cs, pilot);
+		Behavior gereChemin= new GereChemin(cheminCouleurs, chemin);
 		
-		Behavior[] behaviors = {verifCouleurs, emergencyStop};
+		
+		Behavior[] behaviors = {gereChemin, avancer, tournerGauche, tournerDroite, demiTour, verifCouleurs, stopProg, emergencyStop};
 		
 		
 		Arbitrator arbitrator = new Arbitrator(behaviors);
 		emergencyStop.setArbitrator(arbitrator);
+		stopProg.setArbitrator(arbitrator);
 		arbitrator.go();
 		
 	}

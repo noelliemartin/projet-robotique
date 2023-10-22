@@ -1,6 +1,7 @@
 package comportements;
 
 import lejos.hardware.Button;
+import lejos.hardware.motor.Motor;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
 
@@ -14,21 +15,31 @@ public class TournerDroite implements Behavior{
 	
 	@Override
 	public boolean takeControl() {
-		boolean v = Button.RIGHT.isDown();
-		if(v) System.out.println("droite");
-		return v;
+		return GereChemin.mouvt==3;
 	}
 
 	@Override
 	public void action() {
-		this.pilot.travel(120 + 15); //TODO magic number (avance de X mm)
-		this.pilot.rotate(-90);
-		this.pilot.travel(120 + 15); //TODO magic number (avance de X mm)
+		if(GereChemin.mouvt!=5) {
+			this.pilot.travel(120 + 15); //TODO magic number (avance de X mm)
+			this.pilot.rotate(100);
+			this.pilot.travel(120 + 15); //TODO magic number (avance de X mm)
+			pilot.stop();
+			System.out.println("Je tourne a droite...");
+			//On indique qu'on passe à la case suivante
+			GereChemin.indice+=1;
+			//On réajuste ces paramètres pour faire la vérification de couleur
+			GereChemin.mouvt=5;
+			GereChemin.colorGood=false;
+		}
+		
 	}
 
 	@Override
 	public void suppress() {
-		// TODO Auto-generated method stub
+		Motor.B.stop(true);
+        Motor.C.stop(true);
+		pilot.stop();
 		
 	}
 

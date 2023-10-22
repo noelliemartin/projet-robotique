@@ -2,15 +2,15 @@ package logique;
 
 public class Case {
 	
-	private int couleur;
+	private float[] couleur;
 	private int cout;
 	
-	public Case(int col, int ct) {
+	public Case(float[]col, int ct) {
 		this.couleur = col;
 		this.cout = ct;
 	}
 	
-	public int getCouleur() {
+	public float[] getCouleur() {
 		return this.couleur;
 	}
 	

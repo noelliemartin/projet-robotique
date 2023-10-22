@@ -1,6 +1,7 @@
 package comportements;
 
 import lejos.hardware.Button;
+import lejos.hardware.motor.Motor;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
 
@@ -14,22 +15,33 @@ public class TournerGauche implements Behavior{
 	
 	@Override
 	public boolean takeControl() {
-		boolean v = Button.LEFT.isDown();
-		if(v) System.out.println("gauche");
-		System.out.println(v);
-		return true;
+		return GereChemin.mouvt==2;
 	}
 
 	@Override
 	public void action() {
-		this.pilot.rotate(90);
+		if (GereChemin.mouvt!=5) {
+			this.pilot.travel(120 + 15); //TODO magic number (avance de X mm)
+			this.pilot.rotate(-100);
+			this.pilot.travel(120 + 15); //TODO magic number (avance de X mm)
+			pilot.stop();
+			
+			//On passe à la case actuelle
+			GereChemin.indice+=1;
+			//On réajuste les paramètres pour faire la vérification de couleur
+			GereChemin.colorGood=false;
+			GereChemin.mouvt=5;
+			System.out.println("Je tourne a gauche...");
+		}
 		
 		//TODO verif gyroscope
 	}
 
 	@Override
 	public void suppress() {
-		// TODO Auto-generated method stub
+		Motor.B.stop(true);
+        Motor.C.stop(true);
+		pilot.stop();
 		
 	}
 
