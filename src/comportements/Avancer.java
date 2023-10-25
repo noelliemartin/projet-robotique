@@ -20,7 +20,7 @@ public class Avancer implements Behavior{
 	@Override
 	public void action() {
 		if(GereChemin.mouvt!=5) {
-			pilot.setLinearSpeed(30.);
+			pilot.setLinearSpeed(60.);
 			this.pilot.travel(120 + 15); //TODO magic number (avance de X mm)
 			pilot.stop();
 			System.out.println("J'avance...");

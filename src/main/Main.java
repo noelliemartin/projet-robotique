@@ -29,6 +29,7 @@ public class Main {
 		Main_logique vals_theo = new Main_logique ();
 		int [][] chemin= vals_theo.getChemin1();
 		float[][] cheminCouleurs= vals_theo.getCheminColors();
+		System.out.println(cheminCouleurs);
 		
 		System.out.println("Pressez un bouton.");
 		//Attente de l'intialisation
@@ -39,14 +40,14 @@ public class Main {
 		Wheel wheel2 = WheeledChassis.modelWheel(Motor.C, 56.).offset(60);
 		Chassis chassis = new WheeledChassis(new Wheel[] {wheel1, wheel2}, 2);
 		MovePilot pilot = new MovePilot(chassis);
-		pilot.setLinearSpeed(30.);
-		pilot.setAngularSpeed(30.);
+		pilot.setLinearSpeed(60.);
+		pilot.setAngularSpeed(60.);
 		
 		//EV3TouchSensor ts = new EV3TouchSensor(SensorPort.S1);
 		//EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);
 		//EV3GyroSensor gs = new EV3GyroSensor(SensorPort.S2);
 		
-		EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S2);
+		EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);
 		//012 => colors ; 3 => gyro
 		float[] s = new float[3];
 		

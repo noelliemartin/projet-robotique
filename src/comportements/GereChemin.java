@@ -58,11 +58,11 @@ public class GereChemin implements Behavior, IParams{
 				int x1=caseDep[0]; int y1=caseDep[1];
 				int x2=caseSuiv[0]; int y2=caseSuiv[1];
 				//cas où il faut avancer
-				if ((x2<x1 && orient==0) || (x2>x1 && orient==2) || (y2>y1 && orient==1) || (y2<y1 && orient==3)){
+				if ((y2<y1 && orient==0) || (y2>y1 && orient==2) || (x2>x1 && orient==1) || (x2<x1 && orient==3)){
 					mouvt=1;
 				}
 				//Cas où il faut tourner à droite
-				else if((x2<x1 && orient==1) || (x2>x1 && orient==3) || (y2>y1 && orient==2) || (y2<y1 && orient==0)) {
+				else if((y2<y1 && orient==1) || (y2>y1 && orient==3) || (x2>x1 && orient==2) || (x2<x1 && orient==0)) {
 					mouvt=3;
 					//On change l'orientation du robot
 					if(orient!=0) {
@@ -73,7 +73,7 @@ public class GereChemin implements Behavior, IParams{
 					}
 				}
 				//Cas où il faut tourner à gauche
-				else if((x2<x1 && orient==3) || (x2>x1 && orient==1) || (y2>y1 && orient==0) || (y2<y1 && orient==2)) {
+				else if((y2<y1 && orient==3) || (y2>y1 && orient==1) || (x2>x1 && orient==0) || (x2<x1 && orient==2)) {
 					mouvt=2;
 					//On change l'orientation du robot
 					if(orient!=3) {

@@ -21,8 +21,7 @@ public class TournerGauche implements Behavior{
 	@Override
 	public void action() {
 		if (GereChemin.mouvt!=5) {
-			this.pilot.travel(120 + 15); //TODO magic number (avance de X mm)
-			this.pilot.rotate(-100);
+			this.pilot.rotate(-75);
 			this.pilot.travel(120 + 15); //TODO magic number (avance de X mm)
 			pilot.stop();
 			

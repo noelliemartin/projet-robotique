@@ -27,16 +27,16 @@ public class Carte implements IParams{
 		for(int i = this.depart[0] ; i >= 0; i--) {
 			copieDep[0] = i;
 			int[] coord = new int[2];
-			coord[0] = copieDep[0];
-			coord[1] = copieDep[1];
+			coord[0] = copieDep[1];
+			coord[1] = copieDep[0];
 			chemin[j] = coord;
 			j++;
 		}
 		for(int i = 1 ; i < map.length; i++) {
 			copieDep[1] = i;
 			int[] coord = new int[2];
-			coord[0] = copieDep[0];
-			coord[1] = copieDep[1];
+			coord[0] = copieDep[1];
+			coord[1] = copieDep[0];
 			chemin[j] = coord;
 			j++;
 		}

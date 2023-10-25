@@ -14,10 +14,10 @@ public interface IParams {
 	
 	// TODO : tableau de 3 elt de couleurs
 	public float[] WHITE = {255, 255, 153};
-	public float[] RED = {255, 25, 12};
+	public float[] RED = {210, 25, 12};
 	public float[] BLUE = {40, 45, 51};
 	public float[] GREEN = {72, 147, 27};
-	public float[] ORANGE = {251, 62, 15};
+	public float[] ORANGE = {210, 62, 15};
 	
 	
 }
