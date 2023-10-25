@@ -2,8 +2,8 @@ package logique;
 
 import java.util.Arrays;
 
-// TODO : ne doit pas être dépendant de IParams
-public class Carte implements IParams{
+// TODO : ne doit pas ï¿½tre dï¿½pendant de IParams
+public class Carte {
 	
 	private Case[][] map;
 	public int[] arrive;
@@ -20,7 +20,7 @@ public class Carte implements IParams{
 	}
 	
 	public int[][] getChemin1(){
-		int[][] chemin = new int[longChemin1][2]; 
+		int[][] chemin = new int[IParams.longChemin1][2]; 
 		int j = 0;
 		int[] copieDep = Arrays.copyOf(depart, depart.length);
 		

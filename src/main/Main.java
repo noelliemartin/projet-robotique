@@ -20,16 +20,23 @@ import lejos.robotics.chassis.WheeledChassis;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
+import logique.IParams;
 import logique.Main_logique;
+import utilitaires.Etalonnage;
 
 public class Main {
 	
 	public static void main(String[] args) {
-		//Récupérer le chemin avec les coordonnées et les couleurs
+		//Rï¿½cupï¿½rer le chemin avec les coordonnï¿½es et les couleurs
 		Main_logique vals_theo = new Main_logique ();
 		int [][] chemin= vals_theo.getChemin1();
 		float[][] cheminCouleurs= vals_theo.getCheminColors();
 		System.out.println(cheminCouleurs);
+		
+		EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);
+		//012 => colors ; 3 => gyro
+		
+		Etalonnage.etalonner(cs);
 		
 		System.out.println("Pressez un bouton.");
 		//Attente de l'intialisation
@@ -47,11 +54,10 @@ public class Main {
 		//EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);
 		//EV3GyroSensor gs = new EV3GyroSensor(SensorPort.S2);
 		
-		EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);
-		//012 => colors ; 3 => gyro
-		float[] s = new float[3];
 		
-		//Création des behaviors
+		float[] s = new float[3];
+	
+		//Crï¿½ation des behaviors
 		EmergencyStop emergencyStop = new EmergencyStop(cs,pilot);
 		Behavior avancer = new Avancer(pilot);
 		Behavior tournerGauche = new TournerGauche(pilot);

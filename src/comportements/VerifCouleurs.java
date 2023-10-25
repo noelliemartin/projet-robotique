@@ -5,7 +5,7 @@ import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.subsumption.Behavior;
 import logique.IParams;
 
-public class VerifCouleurs implements Behavior, IParams{
+public class VerifCouleurs implements Behavior{
 
 	EV3ColorSensor colorSensor;
 	float[] tab;
