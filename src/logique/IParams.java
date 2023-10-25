@@ -8,8 +8,8 @@ public class IParams {
 	public static final int dimensionLigne = 5;
 	public static final int dimensionCol = 7;
 	
-	public static final int[] depart = {4, 0};
-	public static final int[] arrive = {0, 6};
+	public static final int[] depart = {0, 4};
+	public static final int[] arrive = {6, 0};
 	public static final int longChemin1 = 11;
 	
 	// TODO : tableau de 3 elt de couleurs

@@ -21,7 +21,8 @@ public class Main_logique {
 			}
 		}
 		carte = new Carte(map, IParams.depart, IParams.arrive);
-		//System.out.println(Arrays.deepToString(carte.getChemin1()));
+		//printCarte();
+		System.out.println(Arrays.deepToString(carte.getChemin1()));
 	}
 	
 	public int[][] getChemin1() {
@@ -35,6 +36,36 @@ public class Main_logique {
 			cheminCouleurs[i]=tabColor[tab_coord[i][0]][tab_coord[i][1]];
 		}
 		return cheminCouleurs;
+	}
+	
+	//Permet de print la carte.
+	public void printCarte() {
+		for (int i=0;i<IParams.dimensionCol;i++) {
+			System.out.print("[");
+			for (int j=0;j<IParams.dimensionLigne;j++) {
+				System.out.print(" "+detectColor(tabColor[i][j])+" ");
+			}
+			System.out.println("]");
+		}
+	}
+	
+	//Permet de reconnaître la couleur et de lui attribuer un nom.
+	public String detectColor(float[] couleur) {
+		if(couleur[0]==IParams.RED[0] && couleur[1]==IParams.RED[1] && couleur[2]==IParams.RED[2]) {
+			return "R";
+		}
+		else if(couleur[0]==IParams.GREEN[0] && couleur[1]==IParams.GREEN[1] && couleur[2]==IParams.GREEN[2]) {
+			return "G";
+		}
+		else if(couleur[0]==IParams.BLUE[0] && couleur[1]==IParams.BLUE[1] && couleur[2]==IParams.BLUE[2]) {
+			return "B";
+		}
+		else if (couleur[0]==IParams.WHITE[0] && couleur[1]==IParams.WHITE[1] && couleur[2]==IParams.WHITE[2]) {
+			return "W";
+		}
+		else {
+			return "O";
+		}
 	}
 	
 

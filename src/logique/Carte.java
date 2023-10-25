@@ -20,27 +20,34 @@ public class Carte {
 	}
 	
 	public int[][] getChemin1(){
-		int[][] chemin = new int[IParams.longChemin1][2]; 
-		int j = 0;
+		int[][] chemin_int = new int[map.length*map.length][2]; 
 		int[] copieDep = Arrays.copyOf(depart, depart.length);
-		
-		for(int i = this.depart[0] ; i >= 0; i--) {
-			copieDep[0] = i;
-			int[] coord = new int[2];
-			coord[0] = copieDep[1];
-			coord[1] = copieDep[0];
-			chemin[j] = coord;
-			j++;
+		chemin_int[0]=copieDep;
+		int i=0;
+		while ((chemin_int[i][0]!=arrive[0] && chemin_int[i][1]!=arrive[1])) {
+			int[] case_g=Arrays.copyOf(chemin_int[i], 2);
+			case_g[1]-=1;
+			int [] case_b=Arrays.copyOf(chemin_int[i], 2);
+			case_b[0]+=1;
+			i++;
+			
+			if(case_b[0]>=6) {
+				chemin_int[i]=case_g;
+			}
+			else if(case_g[1]<=0) {
+				chemin_int[i]=case_b;
+			}
+			else {
+				float nb_alea= (float) Math.random();
+				chemin_int[i]=nb_alea>0.5?case_g:case_b;
+			}
+			
+			
 		}
-		for(int i = 1 ; i < map.length; i++) {
-			copieDep[1] = i;
-			int[] coord = new int[2];
-			coord[0] = copieDep[1];
-			coord[1] = copieDep[0];
-			chemin[j] = coord;
-			j++;
-		}
-		return chemin;
+		chemin_int[i+1]=Arrays.copyOf(arrive, 2);
+		int[][] cheminReturn= Arrays.copyOf(chemin_int, i+1);
+		return cheminReturn;
 	}
+
 	
 }

@@ -27,7 +27,7 @@ public class VerifCouleurs implements Behavior{
 		if(GereChemin.mouvt!=6) {
 			this.colorSensor.getRGBMode().fetchSample(this.tab, 0);
 			
-			System.out.println("r: "+this.tab[0]+"g: "+this.tab[1]+"b: "+this.tab[2]);
+			//System.out.println("r: "+this.tab[0]+"g: "+this.tab[1]+"b: "+this.tab[2]);
 
 			float[] couleurRef = GereChemin.cheminCouleurs[GereChemin.indice];  
 			
@@ -37,15 +37,13 @@ public class VerifCouleurs implements Behavior{
 			
 			for (int i = 0; i < 3; i++) {
 				float currentColor = this.tab[i]*1000;
-				
 				if(currentColor > 255)currentColor = 255;
 				
-				if(!(currentColor >= couleurRef[i] - 255*seuil && currentColor <= couleurRef[i] + 255*seuil)){
+				if(!(currentColor >= couleurRef[i]*1000 - 255*seuil && currentColor <= couleurRef[i]*1000 + 255*seuil)){
 					isColorGood = false;
 					break;
 				}
 			}
-			//TODO : remettre ce code en place
 			
 			GereChemin.colorGood= isColorGood;
 			//GereChemin.colorGood=true;

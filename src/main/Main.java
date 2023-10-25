@@ -13,31 +13,29 @@ import lejos.hardware.motor.Motor;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3GyroSensor;
-import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.robotics.chassis.Chassis;
 import lejos.robotics.chassis.Wheel;
 import lejos.robotics.chassis.WheeledChassis;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
-import logique.IParams;
 import logique.Main_logique;
 import utilitaires.Etalonnage;
 
 public class Main {
 	
 	public static void main(String[] args) {
-		//Rï¿½cupï¿½rer le chemin avec les coordonnï¿½es et les couleurs
+		
+		EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);
+		//Etalonnage
+		Etalonnage.etalonner(cs);
+		
+		//Construction du chemin
 		Main_logique vals_theo = new Main_logique ();
 		int [][] chemin= vals_theo.getChemin1();
 		float[][] cheminCouleurs= vals_theo.getCheminColors();
-		System.out.println(cheminCouleurs);
 		
-		EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);
-		//012 => colors ; 3 => gyro
-		
-		Etalonnage.etalonner(cs);
-		
+		//Début du parcours
 		System.out.println("Pressez un bouton.");
 		//Attente de l'intialisation
 		Button.waitForAnyPress();
@@ -50,14 +48,13 @@ public class Main {
 		pilot.setLinearSpeed(60.);
 		pilot.setAngularSpeed(60.);
 		
-		//EV3TouchSensor ts = new EV3TouchSensor(SensorPort.S1);
 		//EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);
 		//EV3GyroSensor gs = new EV3GyroSensor(SensorPort.S2);
 		
 		
 		float[] s = new float[3];
 	
-		//Crï¿½ation des behaviors
+		//Creation des behaviors
 		EmergencyStop emergencyStop = new EmergencyStop(cs,pilot);
 		Behavior avancer = new Avancer(pilot);
 		Behavior tournerGauche = new TournerGauche(pilot);
