@@ -1,6 +1,12 @@
 package logique;
 
 import java.util.Arrays;
+/**
+ * 
+ * Classe qui permet de gérer tous les aspects théoriques, soit la création
+ * de carte et la génération d'un chemin à parcourir pour le robot.
+ *
+ */
 import logique.IParams;
 
 public class Main_logique {
@@ -8,7 +14,10 @@ public class Main_logique {
 	private Carte carte;
 	private float [][][] tabColor;
 	
-	
+	/**
+	 * Méthode qui initialise les éléments théoriques de la carte et des chemins
+	 * à parcourir.
+	 */
 	public Main_logique (){
 		Case[][] map = new Case[IParams.dimensionCol][IParams.dimensionLigne];
 		float [][][] tabColor1 = {{IParams.RED, IParams.BLUE, IParams.GREEN, IParams.GREEN, IParams.WHITE}, {IParams.GREEN, IParams.BLUE, IParams.GREEN, IParams.GREEN, IParams.GREEN}, {IParams.GREEN, IParams.BLUE, IParams.BLUE,
@@ -22,13 +31,22 @@ public class Main_logique {
 		}
 		carte = new Carte(map, IParams.depart, IParams.arrive);
 		//printCarte();
-		System.out.println(Arrays.deepToString(carte.getChemin1()));
+		//System.out.println(Arrays.deepToString(carte.getChemin1()));
 	}
 	
+	/**
+	 * Méthode qui permet d'obtenir un chemin à parcourir par le robot (exercice 1)
+	 * @return une liste de coordonnées qui représente le chemin. 
+	 */
 	public int[][] getChemin1() {
 		return carte.getChemin1();
 	}
 	
+	/**
+	 * Méthode qui permet d'obtenir les couleurs associées au chemin à parcourir par le
+	 * robot.
+	 * @return une liste de couleurs, chacune correspondant à une case du chemin.
+	 */
 	public float [][] getCheminColors(){
 		int [][] tab_coord=carte.getChemin1();
 		float[][] cheminCouleurs=new float[IParams.longChemin1][3];
@@ -38,7 +56,9 @@ public class Main_logique {
 		return cheminCouleurs;
 	}
 	
-	//Permet de print la carte.
+	/**
+	 * Méthode qui permet d'afficher la carte sur le robot.
+	 */
 	public void printCarte() {
 		for (int i=0;i<IParams.dimensionCol;i++) {
 			System.out.print("[");
@@ -49,7 +69,11 @@ public class Main_logique {
 		}
 	}
 	
-	//Permet de reconnaître la couleur et de lui attribuer un nom.
+	/**
+	 * Méthode qui permet de pouvoir afficher une couleur sous un format compréhensible.
+	 * @param couleur 
+	 * @return une couleur sous la forme d'une lettre. 
+	 */
 	public String detectColor(float[] couleur) {
 		if(couleur[0]==IParams.RED[0] && couleur[1]==IParams.RED[1] && couleur[2]==IParams.RED[2]) {
 			return "R";

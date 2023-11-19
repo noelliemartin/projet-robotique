@@ -4,25 +4,29 @@ import lejos.robotics.subsumption.Behavior;
 import logique.IParams;
 /**
  * 
- * Classe qui permet de gï¿½rer le parcours d'un chemin
+ * Classe qui permet de gerer le parcours d'un chemin
  *
  */
 public class GereChemin implements Behavior{
 	//Permet de dire quel behavior doit s'activer.
 	//Si 0, c'est VerifCouleurs, si c'est -1 = reculer, -2=finir, 1=avancer,2=tournerLeft,3=TournerRight.
 	public static int mouvt=5;
-	//Chemin sous forme de coordonnï¿½es
+	//Chemin sous forme de coordonnees
 	private int [][] chemin;
 	//Chemin sous forme de cases de couleurs
 	public static float[][] cheminCouleurs;
 	//Orientation du robot : 0 pointe vers l'ouest, 1 pointe vers le bas, 2 pointe vers l'est, 3 pointe vers le haut.
 	private int orient=0;
-	//Boolï¿½en qui indique si la couleur est bonne
+	//Booleen qui indique si la couleur est bonne
 	public static boolean colorGood=false;
 	//position actuelle du robot
 	public static int indice=0;
 	
-	
+	/**
+	 * Méthode qui initialise la gestion du chemin à parcourir
+	 * @param cheminCouleurs
+	 * @param chemin
+	 */
 	public GereChemin(float[][] cheminCouleurs, int[][] chemin) {
 		this.cheminCouleurs=cheminCouleurs;
 		this.chemin=chemin;
@@ -30,38 +34,45 @@ public class GereChemin implements Behavior{
 
 
 	@Override
+	/**
+	 * Méthode qui prend le contrôle pour gérer le chemin
+	 */
 	public boolean takeControl() {
 		return true;
 	}
 
 
 	@Override
+	/**
+	 * Méthode qui permet de définir l'action à réaliser pour parcourir correctement 
+	 * le chemin.
+	 */
 	public void action() {
 		try {
 			Thread.sleep(800);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		//Si on arrive au bout du chemin, le programme s'arrï¿½te
+		//Si on arrive au bout du chemin, le programme s'arrete
 		if(chemin.length==indice+1) {
-			//Behavior qui arrï¿½te le programme
+			//Behavior qui arrete le programme
 			mouvt=-2;
 		}
-		//Si le mouvement a dï¿½jï¿½ ï¿½tï¿½ fait (ï¿½ mettre sinon les behaviors se chevauchent et ï¿½a plante)
+		//Si le mouvement a ete change par une fonction (a mettre sinon les behaviors se chevauchent et ça plante)
 		else if (mouvt!=5) {
 			//Si la couleur est bonne
 			if (colorGood) {
 				//case actuelle
 				int [] caseDep=chemin[indice];
-				//case oï¿½ il faut aller
+				//case ou il faut aller
 				int [] caseSuiv=chemin[indice+1];
 				int x1=caseDep[0]; int y1=caseDep[1];
 				int x2=caseSuiv[0]; int y2=caseSuiv[1];
-				//cas oï¿½ il faut avancer
+				//cas ou il faut avancer
 				if ((y2<y1 && orient==0) || (y2>y1 && orient==2) || (x2>x1 && orient==1) || (x2<x1 && orient==3)){
 					mouvt=1;
 				}
-				//Cas oï¿½ il faut tourner ï¿½ droite
+				//Cas ou il faut tourner a droite
 				else if((y2<y1 && orient==1) || (y2>y1 && orient==3) || (x2>x1 && orient==2) || (x2<x1 && orient==0)) {
 					mouvt=3;
 					//On change l'orientation du robot
@@ -72,7 +83,7 @@ public class GereChemin implements Behavior{
 						orient=3;
 					}
 				}
-				//Cas oï¿½ il faut tourner ï¿½ gauche
+				//Cas ou il faut tourner a gauche
 				else if((y2<y1 && orient==3) || (y2>y1 && orient==1) || (x2>x1 && orient==0) || (x2<x1 && orient==2)) {
 					mouvt=2;
 					//On change l'orientation du robot
@@ -83,17 +94,17 @@ public class GereChemin implements Behavior{
 						orient=0;
 					}
 				}
-				//Cas oï¿½ il faut faire demi-tour 
+				//Cas ou il faut faire demi-tour 
 				else {
 					mouvt=-1;
 				}
 			}
 			else if ((mouvt==6 && !colorGood) || mouvt==-2){
-				//Behavior d'arrï¿½t
+				//Behavior d'arret
 				mouvt=-2;
 			}
 		}
-		//Cas oï¿½ la vï¿½rification de couleur n'a toujours pas ï¿½tï¿½ faite : on la fait.
+		//Cas ou la verification de couleur n'a toujours pas ete faite : on la fait.
 		else {
 			mouvt=0;
 		}

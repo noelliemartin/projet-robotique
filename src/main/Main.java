@@ -21,9 +21,16 @@ import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
 import logique.Main_logique;
 import utilitaires.Etalonnage;
-
+/**
+ * 
+ * Classe qui lance le programme du robot.
+ *
+ */
 public class Main {
-	
+	/**
+	 * Méthode qui permet de lancer le programme du robot en respectant les exercices demandés.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		
 		EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);

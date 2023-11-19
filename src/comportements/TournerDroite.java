@@ -1,24 +1,39 @@
 package comportements;
 
-import lejos.hardware.Button;
+
 import lejos.hardware.motor.Motor;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
 
+/**
+ * 
+ * Classe qui permet au robot de tourner à droite.
+ *
+ */
 public class TournerDroite implements Behavior{
 
-	MovePilot pilot;
+	private MovePilot pilot;
 	
+	/**
+	 * Méthode qui initialise l'action.
+	 * @param p
+	 */
 	public TournerDroite(MovePilot p) {
 		this.pilot = p; 
 	}
 	
 	@Override
+	/**
+	 * Méthode qui permet de prendre le contrôle pour tourner à droite. 
+	 */
 	public boolean takeControl() {
 		return GereChemin.mouvt==3;
 	}
 
 	@Override
+	/**
+	 * Méthode qui fait tourner le robot à droite. 
+	 */
 	public void action() {
 		if(GereChemin.mouvt!=5) {
 			this.pilot.travel(120 + 15); //TODO magic number (avance de X mm)
@@ -36,6 +51,9 @@ public class TournerDroite implements Behavior{
 	}
 
 	@Override
+	/**
+	 * Méthode qui permet de passer à une autre action. x
+	 */
 	public void suppress() {
 		Motor.B.stop(true);
         Motor.C.stop(true);

@@ -1,5 +1,11 @@
 package logique;
 
+/**
+ * 
+ * Classe qui contient toutes les constantes et variables importantes.
+ * Nous n'utilisons pas d'interfaces car certaines variables sont modifiées.
+ *
+ */
 public class IParams {
 	
 	public static final double dimensionTraitNoir = 1.5;

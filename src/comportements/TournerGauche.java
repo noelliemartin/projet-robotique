@@ -1,24 +1,38 @@
 package comportements;
 
-import lejos.hardware.Button;
+
 import lejos.hardware.motor.Motor;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
 
+/**
+ * 
+ * Classe qui au robot de tourner à gauche.
+ *
+ */
 public class TournerGauche implements Behavior{
 	
-	MovePilot pilot;
-	
+	private MovePilot pilot;
+	/**
+	 * Méthode qui initialise le mouvement.
+	 * @param p
+	 */
 	public TournerGauche(MovePilot p) {
 		this.pilot = p;
 	}
 	
 	@Override
+	/**
+	 * Méthode qui permet de prendre le contrôle pour tourner à gauche. 
+	 */
 	public boolean takeControl() {
 		return GereChemin.mouvt==2;
 	}
 
 	@Override
+	/**
+	 * Méthode qui fait tourner le robot à gauche. 
+	 */
 	public void action() {
 		if (GereChemin.mouvt!=5) {
 			this.pilot.rotate(-75);
@@ -37,6 +51,9 @@ public class TournerGauche implements Behavior{
 	}
 
 	@Override
+	/**
+	 * Méthode qui permet de passer à une autre action. 
+	 */
 	public void suppress() {
 		Motor.B.stop(true);
         Motor.C.stop(true);
