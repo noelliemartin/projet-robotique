@@ -1,12 +1,6 @@
 package logique;
 
 import java.util.Arrays;
-/**
- * 
- * Classe qui permet de gérer tous les aspects théoriques, soit la création
- * de carte et la génération d'un chemin à parcourir pour le robot.
- *
- */
 import logique.IParams;
 
 public class Main_logique {
@@ -14,51 +8,34 @@ public class Main_logique {
 	private Carte carte;
 	private static float [][][] tabColor;
 	
-	/**
-	 * Méthode qui initialise les éléments théoriques de la carte et des chemins
-	 * à parcourir.
-	 */
+	public Carte getCarte() {
+		return carte;
+	}
+	
 	public Main_logique (){
 		Case[][] map = new Case[IParams.dimensionCol][IParams.dimensionLigne];
-		float [][][] tabColor1 = {{IParams.RED, IParams.BLUE, IParams.GREEN, IParams.GREEN, IParams.WHITE}, {IParams.GREEN, IParams.BLUE, IParams.GREEN, IParams.GREEN, IParams.GREEN}, {IParams.GREEN, IParams.BLUE, IParams.BLUE,
-			IParams.GREEN, IParams.ORANGE}, {IParams.GREEN, IParams.GREEN, IParams.BLUE, IParams.GREEN, IParams.GREEN}, {IParams.GREEN, IParams.ORANGE, IParams.ORANGE, IParams.ORANGE, IParams.GREEN}, {IParams.GREEN, 
-				IParams.GREEN, IParams.GREEN, IParams.RED, IParams.BLUE}, {IParams.WHITE, IParams.GREEN, IParams.GREEN, IParams.GREEN, IParams.BLUE}};
-		tabColor=tabColor1;
+		tabColor = IParams.tabColor;
 		for(int i = 0; i < IParams.dimensionCol; i++) {
 			for(int y = 0; y < IParams.dimensionLigne; y++) {
-				map[i][y] = new Case(tabColor[i][y],0);
+				if(tabColor[i][y] == IParams.BLUE)
+					map[i][y] = new Case(tabColor[i][y], 10, i, y);
+				else if(tabColor[i][y] == IParams.ORANGE)
+					map[i][y] = new Case(tabColor[i][y], 5, i, y);
+				else
+					map[i][y] = new Case(tabColor[i][y], 1, i, y);
 			}
 		}
 		carte = new Carte(map, IParams.depart, IParams.arrive);
 		//printCarte();
-		//System.out.println(Arrays.deepToString(carte.getChemin1()));
+		System.out.println(Arrays.deepToString(carte.getChemin1()));
 	}
 	
-	/**
-	 * Méthode qui permet d'obtenir un chemin à parcourir par le robot (exercice 1)
-	 * @return une liste de coordonnées qui représente le chemin. 
-	 */
 	public int[][] getChemin1() {
 		return carte.getChemin1();
 	}
 	
-	/**
-	 * Méthode qui permet d'obtenir les couleurs associées au chemin à parcourir par le
-	 * robot.
-	 * @return une liste de couleurs, chacune correspondant à une case du chemin.
-	 */
-	public float [][] getCheminColors(){
-		int [][] tab_coord=carte.getChemin1();
-		float[][] cheminCouleurs=new float[IParams.longChemin1][3];
-		for (int i=0;i<tab_coord.length;i++) {
-			cheminCouleurs[i]=tabColor[tab_coord[i][0]][tab_coord[i][1]];
-		}
-		return cheminCouleurs;
-	}
 	
-	/**
-	 * Méthode qui permet d'afficher la carte sur le robot.
-	 */
+	//Permet de print la carte.
 	public void printCarte() {
 		for (int i=0;i<IParams.dimensionCol;i++) {
 			System.out.print("[");
@@ -69,8 +46,7 @@ public class Main_logique {
 		}
 	}
 	
-	
-	//Méthode qui permet d'envoyer la carte sous forme de string
+	//Mï¿½thode qui permet d'envoyer la carte sous forme de string
 	public static String returnCarte() {
 		String resultat = "";
 		for (int i=0;i<IParams.dimensionCol;i++) {
@@ -86,11 +62,7 @@ public class Main_logique {
 		return resultat;
 	}
 	
-	/**
-	 * Méthode qui permet de pouvoir afficher une couleur sous un format compréhensible.
-	 * @param couleur 
-	 * @return une couleur sous la forme d'une lettre. 
-	 */
+	//Permet de reconnaÃ¯Â¿Â½tre la couleur et de lui attribuer un nom.
 	public static String detectColor(float[] couleur) {
 		if(couleur[0]==IParams.RED[0] && couleur[1]==IParams.RED[1] && couleur[2]==IParams.RED[2]) {
 			return "R";

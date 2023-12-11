@@ -5,21 +5,7 @@ import lejos.hardware.lcd.LCD;
 import lejos.hardware.sensor.EV3ColorSensor;
 import logique.IParams;
 
-/**
- * 
- * Classe qui permet d'obtenir les couleurs principales nécessaires pour
- * que le robot parvienne à parcourir le chemin.
- *
- */
-
 public class Etalonnage {
-	/**
-	 * Méthode qui permet d'obtenir les couleurs vues par le robot.
-	 * Comme les capteurs de couleur sont différents pour chaque robot, il est essentiel 
-	 * de faire un étalonnage car la différence des capteurs est trop forte pour régler
-	 * le problème avec juste un seuil. 
-	 * @param colorSensor
-	 */
 	public static void etalonner(EV3ColorSensor colorSensor) {
 		float [] colorsIn = new float[3];
 		

@@ -3,8 +3,11 @@ package bluetooth;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 
+import AI.AStar;
 import lejos.hardware.Bluetooth;
+import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
 import lejos.remote.nxt.BTConnection;
 import lejos.remote.nxt.BTConnector;
@@ -13,6 +16,7 @@ import logique.Carte;
 import logique.Case;
 import logique.IParams;
 import logique.Main_logique;
+import logique.IParams.ExerciceSelection;
 
 public class Main_bluetooth {
 	// classe du robot emetteur
@@ -20,6 +24,20 @@ public class Main_bluetooth {
 	//Méthode pour traiter l'envoi du message en bluetooth
 
 	public static void main(String[] args) throws IOException{
+		boolean exercice2 = true;
+		
+		System.out.println("Bouton gauche: exercice3 / bouton droit: exercice2");
+		switch (Button.waitForAnyPress()) {
+			case Button.ID_LEFT:
+				System.out.println("Exercice 3");
+				exercice2 = false;
+				break;
+			case Button.ID_RIGHT:
+				System.out.println("Exercice 2");
+				exercice2 = true;
+				break;
+		}
+		
 		//recherche du robot correspondant à l'adresse pour la connexion
 		BTConnector bt = new BTConnector();
 		//remplacer par le nom/ip du robot récepteur
@@ -35,14 +53,18 @@ public class Main_bluetooth {
 		if (nxt != null) {
 			//création de la carte
 			Main_logique vals_theo = new Main_logique ();
-			int [][] chemin= vals_theo.getChemin1();
-			float[][] cheminCouleurs= vals_theo.getCheminColors();
 			
 			//Création du bluetooth pour l'envoi
 			System.out.println("Connexion établie !");
 			DataOutputStream data = nxt.openDataOutputStream();
 			//Récupération de la carte à envoyer
-			String message = Main_logique.returnCarte();
+			String message = "Message vide";
+			if(exercice2) {
+				message = Main_logique.returnCarte();				
+			}else {
+				message = Arrays.deepToString(AStar.trouverChemin(vals_theo.getCarte()));
+			}
+			System.out.println("J'envoie ce message :");
 			System.out.println(message);
 			//Envoi du message
 			try {
@@ -84,4 +106,5 @@ public class Main_bluetooth {
 		return resultat;
 	}*/
 	
+
 }
