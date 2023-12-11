@@ -1,5 +1,8 @@
 package main;
 
+import java.io.DataInputStream;
+import java.io.ObjectInputStream;
+
 import comportements.Avancer;
 import comportements.DemiTour;
 import comportements.EmergencyStop;
@@ -8,17 +11,21 @@ import comportements.StopProg;
 import comportements.TournerDroite;
 import comportements.TournerGauche;
 import comportements.VerifCouleurs;
+import lejos.hardware.Bluetooth;
 import lejos.hardware.Button;
 import lejos.hardware.motor.Motor;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3GyroSensor;
+import lejos.remote.nxt.BTConnector;
+import lejos.remote.nxt.NXTConnection;
 import lejos.robotics.chassis.Chassis;
 import lejos.robotics.chassis.Wheel;
 import lejos.robotics.chassis.WheeledChassis;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
+import logique.Carte;
 import logique.Main_logique;
 import utilitaires.Etalonnage;
 /**
@@ -32,10 +39,9 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
 		EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);
 		//Etalonnage
-		Etalonnage.etalonner(cs);
+		//Etalonnage.etalonner(cs);
 		
 		//Construction du chemin
 		Main_logique vals_theo = new Main_logique ();
@@ -58,6 +64,11 @@ public class Main {
 		//EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);
 		//EV3GyroSensor gs = new EV3GyroSensor(SensorPort.S2);
 		
+		//Thread pour le bluetooth
+        reception();
+		
+		System.out.println("Pressez un bouton 2.");
+		Button.waitForAnyPress();
 		
 		float[] s = new float[3];
 	
@@ -80,6 +91,42 @@ public class Main {
 		stopProg.setArbitrator(arbitrator);
 		arbitrator.go();
 		
+	}
+	
+	//Méthode pour traiter la réception du message en bluetooth
+	private static void reception() {
+		BTConnector bt = new BTConnector();
+		NXTConnection nxt = bt.waitForConnection(100000, NXTConnection.PACKET);
+
+        if (nxt != null) {
+            System.out.println("Connexion établie");
+            DataInputStream data = nxt.openDataInputStream();
+    		//System.out.println("datainput");
+            try {
+            	String message = null;
+        		//System.out.println("avantwhile");
+        		while (message == null) {
+            		//System.out.println("search");
+                    message = data.readUTF();
+            		//System.out.println("read");
+                    // Traite le message
+                }
+                System.out.println("Message reçu !");
+                System.out.println(message);
+            } catch (Exception e) {
+				System.out.println("Erreur lors de l'envoi...");
+            } finally {
+                try {
+                    data.close();
+                    nxt.close();
+                } catch (Exception e) {
+					System.out.println("Erreur lors de la fermeture du bluetooth...");
+            }
+            }
+        } else {
+			System.out.println("La connexion a échoué...");
+        }
+        
 	}
 	
 }

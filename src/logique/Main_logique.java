@@ -12,7 +12,7 @@ import logique.IParams;
 public class Main_logique {
 	
 	private Carte carte;
-	private float [][][] tabColor;
+	private static float [][][] tabColor;
 	
 	/**
 	 * Méthode qui initialise les éléments théoriques de la carte et des chemins
@@ -69,12 +69,29 @@ public class Main_logique {
 		}
 	}
 	
+	
+	//Méthode qui permet d'envoyer la carte sous forme de string
+	public static String returnCarte() {
+		String resultat = "";
+		for (int i=0;i<IParams.dimensionCol;i++) {
+			resultat = resultat + "[";
+			for (int j=0;j<IParams.dimensionLigne;j++) {
+				System.out.println("oui");
+				System.out.println(detectColor(tabColor[i][j]));
+				resultat += " " + detectColor(tabColor[i][j]) + " ";
+			}
+			resultat += "]";
+		}
+		System.out.println(resultat);
+		return resultat;
+	}
+	
 	/**
 	 * Méthode qui permet de pouvoir afficher une couleur sous un format compréhensible.
 	 * @param couleur 
 	 * @return une couleur sous la forme d'une lettre. 
 	 */
-	public String detectColor(float[] couleur) {
+	public static String detectColor(float[] couleur) {
 		if(couleur[0]==IParams.RED[0] && couleur[1]==IParams.RED[1] && couleur[2]==IParams.RED[2]) {
 			return "R";
 		}
