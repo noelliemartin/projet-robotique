@@ -4,6 +4,7 @@ import lejos.hardware.Button;
 import lejos.hardware.motor.Motor;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
+import logique.IParams;
 
 public class TournerDroite implements Behavior{
 
@@ -21,9 +22,9 @@ public class TournerDroite implements Behavior{
 	@Override
 	public void action() {
 		if(GereChemin.mouvt!=5) {
-			this.pilot.travel(120 + 15); //TODO magic number (avance de X mm)
-			this.pilot.rotate(75);
-			this.pilot.travel(120 + 15); //TODO magic number (avance de X mm)
+			this.pilot.travel(IParams.dimensionCase*10);
+			this.pilot.rotate(77);
+			this.pilot.travel((IParams.dimensionCase*10)-5);
 			pilot.stop();
 			System.out.println("Je tourne a droite...");
 			//On indique qu'on passe à la case suivante

@@ -21,8 +21,8 @@ public class TournerGauche implements Behavior{
 	@Override
 	public void action() {
 		if (GereChemin.mouvt!=5) {
-			this.pilot.rotate(-75);
-			this.pilot.travel(120 + 15); //TODO magic number (avance de X mm)
+			this.pilot.travel(30);
+			this.pilot.rotate(-80);
 			pilot.stop();
 			
 			//On passe à la case actuelle
@@ -33,7 +33,6 @@ public class TournerGauche implements Behavior{
 			System.out.println("Je tourne a gauche...");
 		}
 		
-		//TODO verif gyroscope
 	}
 
 	@Override

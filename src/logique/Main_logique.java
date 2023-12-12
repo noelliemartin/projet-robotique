@@ -7,6 +7,8 @@ public class Main_logique {
 	
 	private Carte carte;
 	private static float [][][] tabColor;
+	private int[][] cheminExo1;
+	
 	
 	public Carte getCarte() {
 		return carte;
@@ -14,7 +16,7 @@ public class Main_logique {
 	
 	public Main_logique (){
 		Case[][] map = new Case[IParams.dimensionCol][IParams.dimensionLigne];
-		tabColor = IParams.tabColor;
+		tabColor = IParams.getCarteColors();
 		for(int i = 0; i < IParams.dimensionCol; i++) {
 			for(int y = 0; y < IParams.dimensionLigne; y++) {
 				if(tabColor[i][y] == IParams.BLUE)
@@ -26,35 +28,29 @@ public class Main_logique {
 			}
 		}
 		carte = new Carte(map, IParams.depart, IParams.arrive);
+		this.cheminExo1=carte.getChemin1();
 		//printCarte();
-		System.out.println(Arrays.deepToString(carte.getChemin1()));
+		//System.out.println(Arrays.deepToString(carte.getChemin1()));
 	}
 	
 	public int[][] getChemin1() {
-		return carte.getChemin1();
+		return cheminExo1;
 	}
 	
+
 	
-	//Permet de print la carte.
-	public void printCarte() {
-		for (int i=0;i<IParams.dimensionCol;i++) {
-			System.out.print("[");
-			for (int j=0;j<IParams.dimensionLigne;j++) {
-				System.out.print(" "+detectColor(tabColor[i][j])+" ");
-			}
-			System.out.println("]");
-		}
-	}
-	
-	//M�thode qui permet d'envoyer la carte sous forme de string
+	/**
+	 * Méthode qui donne la carte sous forme de String.
+	 * @return une liste de couleurs, chacune correspondant à une case du chemin.
+	 */
 	public static String returnCarte() {
 		String resultat = "";
 		for (int i=0;i<IParams.dimensionCol;i++) {
 			resultat = resultat + "[";
 			for (int j=0;j<IParams.dimensionLigne;j++) {
 				System.out.println("oui");
-				System.out.println(detectColor(tabColor[i][j]));
-				resultat += " " + detectColor(tabColor[i][j]) + " ";
+				System.out.println(IParams.detectColor(tabColor[i][j]));
+				resultat += " " + IParams.detectColor(tabColor[i][j]) + " ";
 			}
 			resultat += "]";
 		}
@@ -62,24 +58,19 @@ public class Main_logique {
 		return resultat;
 	}
 	
-	//Permet de reconnaï¿½tre la couleur et de lui attribuer un nom.
-	public static String detectColor(float[] couleur) {
-		if(couleur[0]==IParams.RED[0] && couleur[1]==IParams.RED[1] && couleur[2]==IParams.RED[2]) {
-			return "R";
+	/**
+	 * Méthode qui permet d'obtenir les couleurs associées au chemin à parcourir par le
+	 * robot.
+	 * @return une liste de couleurs, chacune correspondant à une case du chemin.
+	 */
+	public float [][] getChemin1Colors(){
+		int [][] tab_coord=cheminExo1;
+		float[][] cheminCouleurs=new float[IParams.longChemin1][3];
+		for (int i=0;i<tab_coord.length;i++) {
+			//System.out.println("i"+i+"x"+tab_coord[i][0]+"y"+tab_coord[i][1]+IParams.detectColor(this.carteColors[tab_coord[i][0]][tab_coord[i][1]]));
+			cheminCouleurs[i]=tabColor[tab_coord[i][0]][tab_coord[i][1]];
 		}
-		else if(couleur[0]==IParams.GREEN[0] && couleur[1]==IParams.GREEN[1] && couleur[2]==IParams.GREEN[2]) {
-			return "G";
-		}
-		else if(couleur[0]==IParams.BLUE[0] && couleur[1]==IParams.BLUE[1] && couleur[2]==IParams.BLUE[2]) {
-			return "B";
-		}
-		else if (couleur[0]==IParams.WHITE[0] && couleur[1]==IParams.WHITE[1] && couleur[2]==IParams.WHITE[2]) {
-			return "W";
-		}
-		else {
-			return "O";
-		}
+		return cheminCouleurs;
 	}
-	
 
 }

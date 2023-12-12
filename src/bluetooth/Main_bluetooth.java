@@ -89,9 +89,7 @@ public class Main_bluetooth {
 		
 	}
 	
-	//Méthode qui permet d'envoyer la carte sous forme de string
-	
-	//Faire la méthode qui transforme la carte en String et une autre méthode de String à carte
+	//Methode qui permet d'envoyer la carte sous forme de string
 	
 	/*
 	private static String returnCarte() {

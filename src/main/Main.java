@@ -35,7 +35,7 @@ import utilitaires.Etalonnage;
 public class Main {
 	
 	private static ExerciceSelection selectExercice() {
-		System.out.println("Bouton de gauche -> Exercice 1 \n Bouton du haut -> Exercice 2 \n Bouton de droite -> Exercice 3");
+		System.out.println("Bouton de gauche -> Exercice 1 \t Bouton du haut -> Exercice 2 \t Bouton de droite -> Exercice 3");
 		switch (Button.waitForAnyPress()) {
 			case Button.ID_LEFT:
 				return ExerciceSelection.EXERCICE1;
@@ -54,11 +54,8 @@ public class Main {
 		
 		switch(selectExercice()) {
 			case EXERCICE1:
-				//Initialisation des objets mÃ©tiers
+				//Initialisation des objets metiers
 				System.out.println("Exercice 1");
-				Main_logique main_logique = new Main_logique();
-				carte = main_logique.getCarte();
-				chemin = main_logique.getChemin1();
 				break;
 			case EXERCICE2:
 				System.out.println("Exercice 2");
@@ -72,17 +69,17 @@ public class Main {
 				break;
 		}
 		
-		//Construction du chemin avec A*
-		float[][] cheminCouleurs = carte.getCheminColors(chemin, IParams.tabColor);
-		System.out.println(Arrays.deepToString(cheminCouleurs));
-		
 		EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);
 		//Etalonnage
 		Etalonnage.etalonner(cs);
+		Main_logique main_logique = new Main_logique();
+		carte = main_logique.getCarte();
+		chemin = main_logique.getChemin1();
+		float[][] cheminCouleurs = main_logique.getChemin1Colors();
 		
-		//Dï¿½but du parcours
+		//Debut du parcours
 		System.out.println("Pressez un bouton.");
-		//Attente de l'intialisation
+		//Attente de l'initialisation
 		Button.waitForAnyPress();
 		
 		//Initialisation du movepilot
@@ -93,8 +90,6 @@ public class Main {
 		pilot.setLinearSpeed(60.);
 		pilot.setAngularSpeed(60.);
 		
-		//EV3ColorSensor cs = new EV3ColorSensor(SensorPort.S3);
-		//EV3GyroSensor gs = new EV3GyroSensor(SensorPort.S2);
         
 		float[] s = new float[3];
 	
@@ -119,7 +114,7 @@ public class Main {
 		
 	}
 	
-	//M�thode pour traiter la r�ception du message en bluetooth
+	//Methode pour traiter la reception du message en bluetooth
 		private static void reception() {
 			BTConnector bt = new BTConnector();
 			NXTConnection nxt = bt.waitForConnection(100000, NXTConnection.PACKET);

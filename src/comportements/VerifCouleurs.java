@@ -8,11 +8,11 @@ import logique.IParams;
 public class VerifCouleurs implements Behavior{
 
 	EV3ColorSensor colorSensor;
-	float[] tab;
+	float[] currentColor;
 	
 	public VerifCouleurs(EV3ColorSensor color, float[] t) {
 		this.colorSensor = color;
-		this.tab = t;
+		this.currentColor = t;
 	}
 	
 	@Override
@@ -25,18 +25,14 @@ public class VerifCouleurs implements Behavior{
 	@Override
 	public void action() {
 		if(GereChemin.mouvt!=6) {
-			this.colorSensor.getRGBMode().fetchSample(this.tab, 0);
+			this.colorSensor.getRGBMode().fetchSample(this.currentColor, 0);
 			
-			//System.out.println("r: "+this.tab[0]+"g: "+this.tab[1]+"b: "+this.tab[2]);
-
 			float[] couleurRef = GereChemin.cheminCouleurs[GereChemin.indice];  
-			
 			double seuil = 0.20;
 			
 			boolean isColorGood = true;
-			
 			for (int i = 0; i < 3; i++) {
-				float currentColor = this.tab[i]*1000;
+				float currentColor = this.currentColor[i]*1000;
 				if(currentColor > 255)currentColor = 255;
 				
 				if(!(currentColor >= couleurRef[i]*1000 - 255*seuil && currentColor <= couleurRef[i]*1000 + 255*seuil)){
@@ -44,11 +40,14 @@ public class VerifCouleurs implements Behavior{
 					break;
 				}
 			}
+			//Phase de test
+			//System.out.println("Couleur ref"+IParams.detectColor(couleurRef));
+			//System.out.println("Couleur ref"+couleurRef[0]+" "+couleurRef[1]+ " "+ couleurRef[2]);
+			//System.out.println("Couleur current"+IParams.detectColor(this.currentColor));
+			//System.out.println("Couleur current"+currentColor[0]+ " "+ currentColor[1]+" "+currentColor[2]);
 			
 			GereChemin.colorGood= isColorGood;
-			//GereChemin.colorGood=true;
 			System.out.println("Je verifie la couleur...");
-			//System.out.println(isColorGood);
 			GereChemin.mouvt=6;
 		}
 		

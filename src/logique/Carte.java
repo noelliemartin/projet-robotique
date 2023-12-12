@@ -8,6 +8,7 @@ public class Carte {
 	private Case[][] map;
 	public int[] arrive;
 	public int[] depart;
+	private float [][][] carteColors=IParams.getCarteColors();
 	
 	public Carte(Case[][] carte, int[] de, int[] ar) {
 		this.map = carte;
@@ -43,7 +44,7 @@ public class Carte {
 			}
 		}
 		chemin_int[i+1]=Arrays.copyOf(arrive, 2);
-		int[][] cheminReturn= Arrays.copyOf(chemin_int, i+1);
+		int[][] cheminReturn= Arrays.copyOf(chemin_int, i+2);
 		return cheminReturn;
 	}
 	
@@ -63,7 +64,7 @@ public class Carte {
 					return map[i][y];
 			}
 		}
-		throw new Exception("Départ not found");
+		throw new Exception("Depart not found");
 	}
 	
 	public Case getCaseArrivee() throws Exception {
@@ -73,7 +74,19 @@ public class Carte {
 					return map[i][y];
 			}
 		}
-		throw new Exception("Arrivée not found");
+		throw new Exception("Arrivee not found");
+	}
+	
+	
+	//Permet de print la carte.
+	public void printCarte() {
+		for (int i=0;i<IParams.dimensionCol;i++) {
+			System.out.print("[");
+			for (int j=0;j<IParams.dimensionLigne;j++) {
+				System.out.print(" "+IParams.detectColor(carteColors[i][j])+" ");
+			}
+			System.out.println("]");
+		}
 	}
 
 	

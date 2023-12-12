@@ -21,7 +21,7 @@ public class DemiTour implements Behavior {
 		if(GereChemin.mouvt!=5) {
 			pilot.setLinearSpeed(30.);
 			pilot.rotate(180);
-			this.pilot.travel(120 + 15); //TODO magic number (avance de X mm)
+			this.pilot.travel(120 + 15);
 			pilot.stop();
 			System.out.println("Je fais demi-tour...");
 			GereChemin.indice-=1;

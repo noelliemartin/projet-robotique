@@ -3,6 +3,7 @@ package comportements;
 import lejos.hardware.motor.Motor;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
+import logique.IParams;
 
 public class Avancer implements Behavior{
 
@@ -21,7 +22,7 @@ public class Avancer implements Behavior{
 	public void action() {
 		if(GereChemin.mouvt!=5) {
 			pilot.setLinearSpeed(60.);
-			this.pilot.travel(120 + 15); //TODO magic number (avance de X mm)
+			this.pilot.travel((IParams.dimensionCase*10) +(IParams.dimensionTraitNoir*10) ); 
 			pilot.stop();
 			System.out.println("J'avance...");
 			//On passe à la case actuelle
